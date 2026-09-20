@@ -15,7 +15,7 @@ FetchContent_Declare(
 
 FetchContent_MakeAvailable(Catch2)
 
-add_executable(factorial_test tests/factorial_test.cpp src/counting.cpp)
-add_executable(main main.cpp src/counting.cpp)
+add_executable(counting_cards_test tests/counting_cards_test.cpp src/counting.cpp)
+add_executable(main main.cpp src/counting.cpp src/counting.hpp)
 
-target_link_libraries(factorial_test PRIVATE Catch2::Catch2WithMain)
+target_link_libraries(counting_cards_test PRIVATE Catch2::Catch2WithMain)
