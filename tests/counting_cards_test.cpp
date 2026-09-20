@@ -6,10 +6,10 @@
 #include "../src/counting.hpp"
 
 TEST_CASE("Benchmarking Algorithm 1") {
-    int arr1[5] = {1, 2, 3, 4, 5};
+    int arr1[8] = {1, 2, 3, 4, 5, 6, 7, 8};
     int arr2[5] = {10, 12, 16, 20};
-    int arr3[5] = {100, 2000, 38, 2102, 12};
-    int arr4[5] = {10, 92, 3, 2, 1};
+    int arr3[20] = {100, 2000, 38, 2102, 12, 0, 0, 0, 0, 1, 2, 32, 193, -12, 0, 18, 29, 19, 20};
+    int arr4[10] = {10, 92, 3, 2, 1, 10, -5, 30, 10};
 
     BENCHMARK("Algorithm 1 - Array 1") {
         return Sort::firstAlgorithm(arr1, 5);
