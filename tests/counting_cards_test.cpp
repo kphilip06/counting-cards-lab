@@ -1,75 +1,134 @@
 #include <catch2/catch_test_macros.hpp>
 #include <catch2/benchmark/catch_benchmark.hpp>
-#include <catch2/benchmark/catch_constructor.hpp>
-#include <catch2/generators/catch_generators_range.hpp>
+#include <random>
 
-#include "../src/counting.hpp"
+#include "..\src\counting.hpp"
+
+int* generateRandomArray(size_t size) {
+    int* arr = new int[size];
+    std::random_device rd;
+    std::mt19937 gen(rd());
+    std::uniform_int_distribution<int> distr(0, 10000);
+
+    for (size_t i = 0; i < size; ++i) {
+        arr[i] = distr(gen);
+    }
+    return arr;
+}
 
 TEST_CASE("Benchmarking Algorithm 1") {
-    int arr1[8] = {1, 2, 3, 4, 5, 6, 7, 8};
-    int arr2[5] = {10, 12, 16, 20};
-    int arr3[20] = {100, 2000, 38, 2102, 12, 0, 0, 0, 0, 1, 2, 32, 193, -12, 0, 18, 29, 19, 20};
-    int arr4[10] = {10, 92, 3, 2, 1, 10, -5, 30, 10};
+    // Differing array sizes to test performance scaling
+    size_t size1 = 10;
+    size_t size2 = 100;
+    size_t size3 = 1000;
+    size_t size4 = 10000;
 
-    BENCHMARK("Algorithm 1 - Array 1") {
-        return Sort::firstAlgorithm(arr1, 5);
+    int* arr1 = generateRandomArray(size1);
+    int* arr2 = generateRandomArray(size2);
+    int* arr3 = generateRandomArray(size3);
+    int* arr4 = generateRandomArray(size4);
+
+    BENCHMARK("Algorithm 1 - Size 10") {
+        int* res = Sort::firstAlgorithm(arr1, size1);
+        delete[] res; // Clean up memory created inside firstAlgorithm
+        return res;
     };
 
-    BENCHMARK("Algorithm 1 - Array 2") {
-        return Sort::firstAlgorithm(arr2, 5);
+    BENCHMARK("Algorithm 1 - Size 100") {
+        int* res = Sort::firstAlgorithm(arr2, size2);
+        delete[] res;
+        return res;
     };
 
-    BENCHMARK("Algorithm 1 - Array 3") {
-        return Sort::firstAlgorithm(arr3, 5);
+    BENCHMARK("Algorithm 1 - Size 1000") {
+        int* res = Sort::firstAlgorithm(arr3, size3);
+        delete[] res;
+        return res;
     };
 
-    BENCHMARK("Algorithm 1 - Array 4") {
-        return Sort::firstAlgorithm(arr4, 5);
+    BENCHMARK("Algorithm 1 - Size 10000") {
+        int* res = Sort::firstAlgorithm(arr4, size4);
+        delete[] res;
+        return res;
     };
+
+    // Clean up our generated input arrays after benchmarks complete
+    delete[] arr1;
+    delete[] arr2;
+    delete[] arr3;
+    delete[] arr4;
 }
 
 TEST_CASE("Benchmarking Algorithm 2") {
-    int arr1[5] = {1, 2, 3, 4, 5};
-    int arr2[5] = {10, 12, 16, 20};
-    int arr3[5] = {100, 2000, 38, 2102, 12};
-    int arr4[5] = {10, 92, 3, 2, 1};
+    size_t size1 = 10;
+    size_t size2 = 100;
+    size_t size3 = 1000;
+    size_t size4 = 10000;
 
-    BENCHMARK("Algorithm 2 - Array 1") {
-        return Sort::secondAlgorithm(arr1, 5);
+    int* arr1 = generateRandomArray(size1);
+    int* arr2 = generateRandomArray(size2);
+    int* arr3 = generateRandomArray(size3);
+    int* arr4 = generateRandomArray(size4);
+
+    BENCHMARK("Algorithm 2 - Size 10") {
+        int* res = Sort::secondAlgorithm(arr1, size1);
+        delete[] res;
+        return res;
     };
 
-    BENCHMARK("Algorithm 2 - Array 2") {
-        return Sort::secondAlgorithm(arr2, 5);
+    BENCHMARK("Algorithm 2 - Size 100") {
+        int* res = Sort::secondAlgorithm(arr2, size2);
+        delete[] res;
+        return res;
     };
 
-    BENCHMARK("Algorithm 2 - Array 3") {
-        return Sort::secondAlgorithm(arr3, 5);
+    BENCHMARK("Algorithm 2 - Size 1000") {
+        int* res = Sort::secondAlgorithm(arr3, size3);
+        delete[] res;
+        return res;
     };
 
-    BENCHMARK("Algorithm 2 - Array 4") {
-        return Sort::secondAlgorithm(arr4, 5);
+    BENCHMARK("Algorithm 2 - Size 10000") {
+        int* res = Sort::secondAlgorithm(arr4, size4);
+        delete[] res;
+        return res;
     };
+
+    delete[] arr1;
+    delete[] arr2;
+    delete[] arr3;
+    delete[] arr4;
 }
 
 TEST_CASE("Benchmarking Algorithm 3") {
-    int arr1[5] = {1, 2, 3, 4, 5};
-    int arr2[5] = {10, 12, 16, 20};
-    int arr3[5] = {100, 2000, 38, 2102, 12};
-    int arr4[5] = {10, 92, 3, 2, 1};
+    size_t size1 = 10;
+    size_t size2 = 100;
+    size_t size3 = 1000;
+    size_t size4 = 10000;
 
-    BENCHMARK("Algorithm 3 - Array 1") {
-        return Sort::thirdAlgorithm(arr1, 5);
+    int* arr1 = generateRandomArray(size1);
+    int* arr2 = generateRandomArray(size2);
+    int* arr3 = generateRandomArray(size3);
+    int* arr4 = generateRandomArray(size4);
+
+    BENCHMARK("Algorithm 3 - Size 10") {
+        Sort::thirdAlgorithm(arr1, size1);
     };
 
-    BENCHMARK("Algorithm 3 - Array 2") {
-        return Sort::thirdAlgorithm(arr2, 5);
+    BENCHMARK("Algorithm 3 - Size 100") {
+        Sort::thirdAlgorithm(arr2, size2);
     };
 
-    BENCHMARK("Algorithm 3 - Array 3") {
-        return Sort::thirdAlgorithm(arr3, 5);
+    BENCHMARK("Algorithm 3 - Size 1000") {
+        Sort::thirdAlgorithm(arr3, size3);
     };
 
-    BENCHMARK("Algorithm 3 - Array 4") {
-        return Sort::thirdAlgorithm(arr4, 5);
+    BENCHMARK("Algorithm 3 - Size 10000") {
+        Sort::thirdAlgorithm(arr4, size4);
     };
+
+    delete[] arr1;
+    delete[] arr2;
+    delete[] arr3;
+    delete[] arr4;
 }
